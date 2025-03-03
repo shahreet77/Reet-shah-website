@@ -17,39 +17,59 @@ const ContentPage = ({ match }) => {
   }, [content, page]);
 
   return (
-    <Card className="p-6 bg-white shadow-xl rounded-2xl border border-gray-200">
-      <h1 className="text-2xl font-bold mb-4 text-gray-800">{page.replace(/-/g, " ")}</h1>
-      <Textarea
-        value={content}
-        onChange={(e) => setContent(e.target.value)}
-        className="w-full h-64 p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-        placeholder="Write your content here..."
-      />
-      <p className="text-sm mt-2 text-gray-500">Content is saved automatically.</p>
-    </Card>
+    <div className="max-w-4xl mx-auto p-6">
+      <Card className="p-6 bg-white shadow-lg rounded-lg border border-gray-300">
+        <h1 className="text-3xl font-bold mb-4 text-gray-900 border-b pb-2">{page.replace(/-/g, " ")}</h1>
+        <Textarea
+          value={content}
+          onChange={(e) => setContent(e.target.value)}
+          className="w-full h-64 p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+          placeholder="Write your content here..."
+        />
+        <p className="text-sm mt-2 text-gray-500">Content is saved automatically.</p>
+      </Card>
+    </div>
   );
 };
 
 export default function App() {
   return (
     <Router>
-      <div className="p-6 bg-gray-100 min-h-screen">
-        <nav className="mb-6 bg-white shadow-md p-4 rounded-xl flex flex-wrap gap-4">
-          {pages.map((page) => (
-            <Link key={page} to={`/${page.replace(/ /g, "-").toLowerCase()}`} className="text-blue-600 font-semibold hover:underline">
-              {page}
-            </Link>
-          ))}
-        </nav>
-        <Switch>
-          <Route path="/:page" component={ContentPage} />
-          <Route path="/" exact render={() => (
-            <div className="text-center py-10">
-              <h1 className="text-3xl font-bold text-gray-800">Welcome to Your Creativity Website</h1>
-              <p className="text-gray-600 mt-2">Select a topic from the menu to start editing.</p>
-            </div>
-          )} />
-        </Switch>
+      <div className="min-h-screen bg-gray-100">
+        <header className="bg-blue-600 text-white p-6 shadow-md">
+          <h1 className="text-4xl font-bold text-center">Creativity in Early Childhood Curriculum</h1>
+        </header>
+        <div className="flex flex-col md:flex-row">
+          <nav className="md:w-1/4 bg-white shadow-md p-4 h-full md:min-h-screen">
+            <ul className="space-y-3">
+              {pages.map((page) => (
+                <li key={page}>
+                  <Link
+                    to={`/${page.replace(/ /g, "-").toLowerCase()}`}
+                    className="block text-lg text-blue-600 font-semibold hover:bg-blue-100 p-2 rounded-lg"
+                  >
+                    {page}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+          <main className="md:w-3/4 p-6">
+            <Switch>
+              <Route path="/:page" component={ContentPage} />
+              <Route
+                path="/"
+                exact
+                render={() => (
+                  <div className="text-center py-10">
+                    <h1 className="text-3xl font-bold text-gray-800">Welcome to Your Creativity Website</h1>
+                    <p className="text-gray-600 mt-2">Select a topic from the menu to start editing.</p>
+                  </div>
+                )}
+              />
+            </Switch>
+          </main>
+        </div>
       </div>
     </Router>
   );
